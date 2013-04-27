@@ -1,4 +1,6 @@
-package com.manu.ypoll.admin;
+package com.manu.ypoll.attempts;
+
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
@@ -9,16 +11,13 @@ import com.manu.ypoll.commons.Poll;
 
 @Service
 @Scope(proxyMode=ScopedProxyMode.TARGET_CLASS)
-public class PollManager {
+public class Attempter {
 	
 	@Autowired
-	private PollRepository pollRepo;
+	private AttempterRepository attempterRepository;
 	
-	public Poll createPoll(Poll poll) {
-
-		poll = pollRepo.save(poll);
-
-		return poll;
+	public void attempt(Poll p, List<String> selectedIds){
+		Attempt attempt = new Attempt(p.getId(), selectedIds);
+		attempterRepository.save(attempt);
 	}
-
 }
